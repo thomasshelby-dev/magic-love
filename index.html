@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magic Love</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  overflow: hidden;
+}
+
+/* First Page */
+#page1 {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  text-align: center;
+  padding: 20px;
+  color: white;
+}
+
+#page1 h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+#page1 button {
+  padding: 12px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  background: white;
+  color: #ff4d6d;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#page1 button:active {
+  transform: scale(0.95);
+}
+
+/* Second Page */
+#page2 {
+  display: none;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: url('https://images.unsplash.com/photo-1518199266791-5375a83190b7') no-repeat center center/cover;
+}
+
+/* Dark overlay for better text visibility */
+#page2::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  top: 0;
+  left: 0;
+}
+
+/* Floating Text */
+.love {
+  position: absolute;
+  color: #fff;
+  font-weight: bold;
+  animation: floatUp linear infinite;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(100vh);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-10vh);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="page1">
+  <h1>Wanna see a magic? ✨</h1>
+  <button onclick="showMagic()">Tap Here 💖</button>
+</div>
+
+<div id="page2"></div>
+
+<script>
+function showMagic() {
+  document.getElementById("page1").style.display = "none";
+  document.getElementById("page2").style.display = "block";
+  startLove();
+}
+
+function startLove() {
+  setInterval(() => {
+    let love = document.createElement("div");
+    love.className = "love";
+    love.innerText = "I love you ❤️";
+
+    love.style.left = Math.random() * 100 + "vw";
+    love.style.fontSize = (Math.random() * 15 + 14) + "px";
+    love.style.animationDuration = (Math.random() * 3 + 4) + "s";
+
+    document.getElementById("page2").appendChild(love);
+
+    setTimeout(() => {
+      love.remove();
+    }, 7000);
+
+  }, 250);
+}
+</script>
+
+</body>
+</html>
