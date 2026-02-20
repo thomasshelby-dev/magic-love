@@ -1,133 +1,154 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Magic Love</title>
+<title>Magic</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
 }
 
-body {
-  overflow: hidden;
+body, html{
+  height:100%;
+  overflow:hidden;
 }
 
 /* First Page */
-#page1 {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3);
-  text-align: center;
-  padding: 20px;
-  color: white;
+.page1{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  color:white;
+  text-align:center;
 }
 
-#page1 h1 {
-  font-size: 28px;
-  margin-bottom: 20px;
+.page1 h1{
+  font-size:28px;
+  margin-bottom:20px;
 }
 
-#page1 button {
-  padding: 12px 25px;
-  font-size: 16px;
-  border: none;
-  border-radius: 30px;
-  background: white;
-  color: #ff4d6d;
-  cursor: pointer;
-  transition: 0.3s;
+.page1 button{
+  padding:12px 25px;
+  font-size:16px;
+  border:none;
+  border-radius:30px;
+  background:white;
+  color:#ff4f81;
+  cursor:pointer;
+  transition:0.3s;
 }
 
-#page1 button:active {
-  transform: scale(0.95);
+.page1 button:hover{
+  transform:scale(1.1);
 }
 
 /* Second Page */
-#page2 {
-  display: none;
-  height: 100vh;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  background: url('https://images.unsplash.com/photo-1518199266791-5375a83190b7') no-repeat center center/cover;
+.page2{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  background:url("https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTExL2xhdXJhc3RlZmFubzI2Nl9waW5rX3ZhbGVudGluZXNfZGF5X2JhY2tncm91bmRfd2l0aF9oZWFydHNfYm9rZV9kZTAzMWNjMy05MmJmLTQ2NzAtYjliZC0wN2Y2ZDkzYTM1ZDBfMS5qcGc.jpg") no-repeat center center/cover;
 }
 
-/* Dark overlay for better text visibility */
-#page2::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  top: 0;
-  left: 0;
+/* Dark overlay */
+.page2::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
 }
 
-/* Floating Text */
-.love {
-  position: absolute;
-  color: #fff;
-  font-weight: bold;
-  animation: floatUp linear infinite;
-  white-space: nowrap;
-  z-index: 2;
+/* Floating text */
+.love{
+  position:absolute;
+  bottom:-100px;
+  color:white;
+  font-size:20px;
+  animation:floatUp 6s linear infinite;
+  white-space:nowrap;
 }
 
-@keyframes floatUp {
-  from {
-    transform: translateY(100vh);
-    opacity: 1;
+@keyframes floatUp{
+  0%{
+    transform:translateY(0);
+    opacity:1;
   }
-  to {
-    transform: translateY(-10vh);
-    opacity: 0;
+  100%{
+    transform:translateY(-120vh);
+    opacity:0;
   }
 }
 </style>
 </head>
-
 <body>
 
-<div id="page1">
-  <h1>Wanna see a magic? ✨</h1>
-  <button onclick="showMagic()">Tap Here 💖</button>
+<!-- First Page -->
+<div class="page1" id="page1">
+  <h1>Wanna see a magic?</h1>
+  <button id="startBtn">Tap Here</button>
 </div>
 
-<div id="page2"></div>
+<!-- Second Page -->
+<div class="page2" id="page2"></div>
+
+<!-- Hidden Music -->
+<audio id="bgMusic" loop>
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-function showMagic() {
-  document.getElementById("page1").style.display = "none";
-  document.getElementById("page2").style.display = "block";
-  startLove();
-}
+const startBtn = document.getElementById("startBtn");
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
+const music = document.getElementById("bgMusic");
 
-function startLove() {
+startBtn.addEventListener("click", function(){
+  page1.style.display = "none";
+  page2.style.display = "flex";
+  music.play();
+  createLove();
+});
+
+/* Floating I love you text */
+function createLove(){
   setInterval(() => {
-    let love = document.createElement("div");
-    love.className = "love";
-    love.innerText = "I love you ❤️";
+    const text = document.createElement("div");
+    text.classList.add("love");
+    text.innerText = "I Love You ❤️";
+    text.style.left = Math.random() * 100 + "vw";
+    text.style.animationDuration = (4 + Math.random() * 3) + "s";
+    page2.appendChild(text);
 
-    love.style.left = Math.random() * 100 + "vw";
-    love.style.fontSize = (Math.random() * 15 + 14) + "px";
-    love.style.animationDuration = (Math.random() * 3 + 4) + "s";
+    setTimeout(()=>{
+      text.remove();
+    },7000);
 
-    document.getElementById("page2").appendChild(love);
-
-    setTimeout(() => {
-      love.remove();
-    }, 7000);
-
-  }, 250);
+  },300);
 }
+
+/* Stop music when tab hidden */
+document.addEventListener("visibilitychange", function(){
+  if(document.hidden){
+    music.pause();
+  }else{
+    music.play();
+  }
+});
 </script>
 
 </body>
